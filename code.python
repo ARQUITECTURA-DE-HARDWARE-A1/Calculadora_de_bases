@@ -1,0 +1,39 @@
+def convertir_base(numero, base_desde, base_hasta):
+    if base_desde < 1 or base_desde > 16 or base_hasta < 1 or base_hasta > 16:
+        raise ValueError("Las bases deben estar entre 1 y 16")
+    
+    numero_decimal = int(str(numero), base_desde)
+    numero_convertido = ""
+    
+    while numero_decimal > 0:
+        residuo = numero_decimal % base_hasta
+        numero_convertido = str(residuo) + numero_convertido
+        numero_decimal //= base_hasta
+    
+    return numero_convertido
+
+def main():
+    try:
+        numero = input("Ingrese el número: ")
+        base_desde = int(input("Ingrese la base de origen (entre 1 y 16): "))
+        base_hasta = int(input("Ingrese la base de destino (entre 1 y 16): "))
+        
+        numero_convertido = convertir_base(numero, base_desde, base_hasta)
+        
+        print(f"Número convertido a base {base_hasta}: {numero_convertido}")
+        
+        numero_binario = convertir_base(numero, base_desde, 2)
+        print(f"Número en binario: {numero_binario}")
+        
+        mensaje_ascii = ""
+        for i in range(0, len(numero_binario), 8):
+            byte = numero_binario[i:i+8]
+            mensaje_ascii += chr(int(byte, 2))
+        print(f"Mensaje ASCII: {mensaje_ascii}")
+        
+    except ValueError as e:
+        print(f"Error: {e}")
+    
+if __name__ == "__main__":
+    main()
+
